@@ -27,4 +27,3 @@ def test_laplacian_1d():
 def test_laplacian_1d_exceptions(nx, lx, pbc, exception):
     with pytest.raises(exception):
         create_laplacian_1d(nx, lx, pbc=pbc)
-
