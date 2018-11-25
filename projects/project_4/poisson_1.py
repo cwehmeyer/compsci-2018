@@ -1,7 +1,7 @@
 import numpy as np
-from .poisson import create_laplacian_1d
+from poisson import create_laplacian_1d
 
-def create_laplacian_2d(nx, lx, ny, ly, pbc=True):
+def create_laplacian_2d(nx, ny, lx, ly, pbc=True):
     """Ceates a discretized Laplacian in 2D using Kronecker-products
 
     Arguments:
