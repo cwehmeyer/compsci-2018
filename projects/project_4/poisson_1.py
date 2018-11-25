@@ -1,5 +1,5 @@
 import numpy as np
-from poisson import create_laplacian_2d
+from .poisson import create_laplacian_1d
 
 def create_laplacian_2d(nx, lx, ny, ly, pbc=True):
     """Ceates a discretized Laplacian in 2D using Kronecker-products
@@ -13,8 +13,6 @@ def create_laplacian_2d(nx, lx, ny, ly, pbc=True):
     """
     laplacian_x = create_laplacian_1d(nx, lx, pbc)
     laplacian_y = create_laplacian_1d(ny, ly, pbc)
-    mx = (nx / lx)**2
-    my = (ny / ly)**2
     ey, ex = np.identity(ny), np.identity(nx)
     
     laplacian = np.kron(laplacian_x, ey) + np.kron(ex, laplacian_y)
