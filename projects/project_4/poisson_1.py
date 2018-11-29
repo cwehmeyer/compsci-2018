@@ -40,5 +40,4 @@ def create_laplacian_2d(nx, ny, lx, ly, pbc=True):
     ey, ex = np.identity(ny), np.identity(nx)
     
     laplacian = np.kron(laplacian_x, ey) + np.kron(ex, laplacian_y)
-
     return laplacian
