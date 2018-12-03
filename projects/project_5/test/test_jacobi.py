@@ -17,9 +17,9 @@ def test_jacobi_exceptions(rho, boxsize, exception):
         jacobi(rho, boxsize)
         
 @pytest.mark.parametrize('hx, hy, lx, ly', [
-    (nx, ny, lx, ly) for nx, ny, lx, ly in product(
-        [1, 0.2, 0.1],
-        [1, 0.2, 0.1],
+    (hx, hy, lx, ly) for hx, hy, lx, ly in product(
+        [1, 0.7, 0.5],
+        [1, 0.7, 0.5],
         [7, 20., 30.],
         [7, 20., 30.])])
 def test_consisteny(hx, hy, lx, ly):
@@ -30,7 +30,7 @@ def test_consisteny(hx, hy, lx, ly):
   
     rho = np.random.normal(size=(ny,nx))
     rho -= np.mean(rho)
-    pot = jacobi(rho, boxsize, maxiter=10000)
+    pot = jacobi(rho, boxsize, maxiter=1000)
     
     assert pot.ndim == 2, \
     f'Potentials have wrong dimensions: {pot.ndim}'

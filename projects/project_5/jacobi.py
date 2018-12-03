@@ -19,7 +19,7 @@ def jacobi(charge_dist, boxsize, maxiter=100, tol=10**(-5), epsilon0=1.0):
     if h_array.dtype not in (int, float):
         raise TypeError("Entries of boxsize have to be either of type int or float.")
      
-    c = 2*np.sum(1/h**2 for h in h_array)
+    c = 2*np.sum(np.array([1/h**2 for h in h_array]))
     dif = np.inf
     counter = 0  
     
