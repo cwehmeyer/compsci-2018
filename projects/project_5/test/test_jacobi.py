@@ -3,9 +3,6 @@ import numpy as np
 from itertools import product
 from project_5.jacobi import jacobi
 
-import numpy as np
-
-
 def create_laplacian_2d(nx, ny, lx, ly, pbc=True):
     """ Computes discrete Laplacian for a 2d
         charge density matrix, ordered row-wise
