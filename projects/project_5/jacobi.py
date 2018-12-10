@@ -2,7 +2,7 @@ import numpy as np
 
 def jacobi(charge_dist, boxsize, maxiter=1000, tol=10**(-5), epsilon0=1.0):
      
-    """An implementation of the Jacobi-method for solving the discretized Poisson-equation in n dimensions.
+    """An implementation of the Jacobi-method for solving the periodic discretized Poisson-equation in n dimensions.
     Returns the potential as a n-dimensional array.
 
     Arguments:
@@ -34,7 +34,7 @@ def jacobi(charge_dist, boxsize, maxiter=1000, tol=10**(-5), epsilon0=1.0):
     if h_array.ndim != 1:
         raise TypeError("Boxsize needs to be a one-dimensional array.")
     if dim != rho.ndim:
-        raise ValueError("Boxsize needs to have as many values a charge_dist has axes.")
+        raise ValueError("Boxsize needs to have as many values as charge_dist has axes.")
     if any(h_array==0.):
         raise ValueError("Boxsize values all have to be nonzero.") 
     if (1 or 0) in rho.shape:
@@ -42,7 +42,7 @@ def jacobi(charge_dist, boxsize, maxiter=1000, tol=10**(-5), epsilon0=1.0):
     if not np.isclose(np.mean(rho), 0, atol=1e-16):
         raise ValueError("The mean of charge_dist has to be zero. Consider subtracting the mean and try again.")
      
-    c = 2*np.sum(np.array([1/h**2 for h in h_array]))
+    c = 2*np.sum(1/(h_array)**2)
     dif = np.inf
     counter = 0  
     
