@@ -1,5 +1,5 @@
 import numpy as np
-
+from scipy.sparse import diags
 
 
 def create_laplacian_2d(nx, ny, lx, ly, pbc=True):
@@ -29,22 +29,18 @@ def create_laplacian_2d(nx, ny, lx, ly, pbc=True):
 
     hx = (nx / lx) ** 2
     hy = (ny / ly) ** 2
-    a1 =  np.diag((-2 * hx - 2 * hy) * np.ones(nx * ny))
+    diag0 = (-2 * hx - 2 * hy) * np.ones(nx * ny)
     diag1 = hx * np.ones(nx * ny - 1)
     diag1[nx-1::nx] = 0
-    a2 = np.diag(diag1 , 1)
-    a3 = np.diag(diag1 , -1)
-    a4 = np.diag(hy * np.ones(nx * ny - nx), nx)
-    a5 = np.diag(hy * np.ones(nx * ny - nx), -nx)
-    laplacian = a1 + a2 + a3 + a4 + a5
+    diag2 = hy * np.ones(nx * ny - nx)
+    diagonals = [diag0, diag1, diag1, diag2, diag2]
+    offsets   = [0, 1, -1, nx, -nx]
 
     if pbc:
-        a6 = np.diag(hy * np.ones(nx), nx * ny - nx)
-        a7 = np.diag(hy * np.ones(nx), -nx * ny + nx)
-        diag2 = hx * np.zeros(nx * ny - nx + 1)
-        diag2[::nx] = hx
-        a8 = np.diag(diag2, nx - 1)
-        a9 = np.diag(diag2, -nx + 1)
-        laplacian += a6 + a7 + a8 + a9
+        diag4 = hy * np.ones(nx)
+        diag5 = hx * np.zeros(nx * ny - nx + 1)
+        diag5[::nx] = hx
+        diagonals.extend([diag4, diag4, diag5, diag5])
+        offsets.extend([nx * ny - nx, nx - nx * ny, nx - 1, 1 - nx])
 
-    return laplacian
+    return diags(diagonals, offsets).todense()
